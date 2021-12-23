@@ -1,15 +1,5 @@
-# -----------------------------------------------------------
-# Consensus-Aware Visual-Semantic Embedding implementation based on
-# "VSE++: Improving Visual-Semantic Embeddings with Hard Negatives"
-# "Consensus-Aware Visual-Semantic Embedding for Image-Text Matching"
-# Haoran Wang, Ying Zhang, Zhong Ji, Yanwei Pang, Lin Ma
-#
-# Writen by Haoran Wang, 2020
-# ---------------------------------------------------------------
-
 import os
-
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"  # 7 physical location is [3]
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"  
 import time
 import shutil
 import torch
@@ -82,22 +72,12 @@ def main():
                         help='Take the absolute value of embedding vectors.')
     parser.add_argument('--measure', default='cosine',
                         help='Similarity measure used (cosine|order)')
-    parser.add_argument('--attribute_path',
-                        default='data/f30k_annotations/Concept_annotations/',
-                        help='path to get attribute json file')  # absolute path (get from path of SAN model)
-    parser.add_argument('--num_attribute', default=300, type=int, help='dimension of Attribute annotation')
     parser.add_argument('--input_channel', default=300, type=int, help='dimension of initial word embedding')
     parser.add_argument('--inp_name',
                         default='data/f30k_annotations/Concept_annotations/f30k_concepts_glove_word2vec.pkl',
                         help='load the input glove word embedding file')
     parser.add_argument('--adj_file', default='data/f30k_annotations/Concept_annotations/f30k_adj_concepts.pkl',
                         help='load the adj file')
-    parser.add_argument('--learning_rate_MLGCN', default=.0002, type=float, help='learning rate of module of MLGCN.')
-    parser.add_argument('--lr_MLGCN_update', default=10, type=int,
-                        help='Number of epochs to update the learning rate.')
-    parser.add_argument('--Concept_label_ratio', default=0.35, type=float, help='The ratio of concept label.')
-    parser.add_argument('--concept_name', default='data/f30k_annotations/Concept_annotations/category_concepts.json',
-                        help='load the input concrete words of concepts')
     parser.add_argument('--norm_func_type', default='sigmoid', help='choose type of norm functions.')
     parser.add_argument('--feature_fuse_type', default='weight_sum',
                         help='choose the fusing type for raw feature and attribute feature (multiple|concat|adap_sum|weight_sum))')
@@ -286,10 +266,7 @@ def adjust_learning_rate(opt, optimizer, epoch):
     lr_MLGCN = opt.learning_rate_MLGCN * (0.2 ** (epoch // opt.lr_update))
 
     for i, param_group in enumerate(optimizer.param_groups):
-        if i == 6:
-            param_group['lr'] = lr_MLGCN  # if it is GCN lr
-        else:
-            param_group['lr'] = lr_base
+        param_group['lr'] = lr_base
 
 
 def accuracy(output, target, topk=(1,)):
