@@ -646,9 +646,9 @@ class ContrastiveLoss(nn.Module):
 
         return cost_s.sum() + cost_im.sum()
 
-class CVSE(object):
+class GASA(object):
     """
-    CVSE model
+    GASA model
     """
 
     def __init__(self, word2idx, opt):
