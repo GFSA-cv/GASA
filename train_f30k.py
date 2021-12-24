@@ -13,7 +13,7 @@ import pickle
 import data
 from vocab import Vocabulary, deserialize_vocab
 from evaluation import i2t_sep_sim, t2i_sep_sim, AverageMeter, LogCollector, encode_data
-from model_CVSE import CVSE
+from model import 
 
 torch.set_num_threads(10)
 
@@ -101,8 +101,8 @@ def main():
     train_loader, val_loader = data.get_loaders(opt.data_name, vocab, opt.batch_size, opt.workers, opt)
 
     # Construct the model
-    # model = CVSE(opt)
-    model = CVSE(word2idx, opt)
+    # model = GASA(opt)
+    model = GASA(word2idx, opt)
 
     # optionally resume from a checkpoint
     if opt.resume:
@@ -263,7 +263,6 @@ def adjust_learning_rate(opt, optimizer, epoch):
     """Sets the learning rate to the initial LR
        decayed by 10 every 30 epochs"""
     lr_base = opt.learning_rate * (0.1 ** (epoch // opt.lr_update))
-    lr_MLGCN = opt.learning_rate_MLGCN * (0.2 ** (epoch // opt.lr_update))
 
     for i, param_group in enumerate(optimizer.param_groups):
         param_group['lr'] = lr_base
