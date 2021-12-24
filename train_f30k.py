@@ -72,12 +72,6 @@ def main():
                         help='Take the absolute value of embedding vectors.')
     parser.add_argument('--measure', default='cosine',
                         help='Similarity measure used (cosine|order)')
-    parser.add_argument('--input_channel', default=300, type=int, help='dimension of initial word embedding')
-    parser.add_argument('--inp_name',
-                        default='data/f30k_annotations/Concept_annotations/f30k_concepts_glove_word2vec.pkl',
-                        help='load the input glove word embedding file')
-    parser.add_argument('--adj_file', default='data/f30k_annotations/Concept_annotations/f30k_adj_concepts.pkl',
-                        help='load the adj file')
     parser.add_argument('--norm_func_type', default='sigmoid', help='choose type of norm functions.')
     parser.add_argument('--feature_fuse_type', default='weight_sum',
                         help='choose the fusing type for raw feature and attribute feature (multiple|concat|adap_sum|weight_sum))')
