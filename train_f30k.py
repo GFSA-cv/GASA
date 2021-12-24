@@ -13,7 +13,7 @@ import pickle
 import data
 from vocab import Vocabulary, deserialize_vocab
 from evaluation import i2t_sep_sim, t2i_sep_sim, AverageMeter, LogCollector, encode_data
-from model import 
+from model import GASA
 
 torch.set_num_threads(10)
 
